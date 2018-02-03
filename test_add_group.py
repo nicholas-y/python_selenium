@@ -12,7 +12,7 @@ def is_alert_present(wd):
 
 class test_add_group(unittest.TestCase):
     def setUp(self):
-        self.wd = WebDriver()
+        self.wd = WebDriver(capabilities={"marionette": False}, firefox_binary="c:/Program Files/Mozilla Firefox/firefox.exe")
         self.wd.implicitly_wait(60)
     
     def test_test_add_group(self):
