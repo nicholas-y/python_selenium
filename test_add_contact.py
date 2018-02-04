@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from selenium.webdriver.firefox.webdriver import WebDriver
-from selenium.webdriver.common.action_chains import ActionChains
-import time, unittest
+import unittest
 
 def is_alert_present(wd):
     try:
@@ -12,23 +11,24 @@ def is_alert_present(wd):
 
 class test_add_contact(unittest.TestCase):
     def setUp(self):
-        self.wd = WebDriver()
+        self.wd = WebDriver(capabilities={"marionette": False},
+                            firefox_binary="c:/Program Files/Mozilla Firefox/firefox.exe")
         self.wd.implicitly_wait(60)
     
     def test_test_add_contact(self):
-        success = True
         wd = self.wd
-        wd.get("http://localhost:8080/addressbook/")
-        wd.find_element_by_css_selector("html").click()
-        wd.find_element_by_name("user").click()
-        wd.find_element_by_name("user").clear()
-        wd.find_element_by_name("user").send_keys("admin")
-        wd.find_element_by_id("LoginForm").click()
-        wd.find_element_by_name("pass").click()
-        wd.find_element_by_name("pass").clear()
-        wd.find_element_by_name("pass").send_keys("secret")
-        wd.find_element_by_xpath("//form[@id='LoginForm']/input[3]").click()
+        self.open_login_page(wd)
+        self.do_login(wd, "admin", "secret")
+        self.create_new_contact(wd)
+        self.do_logout(wd)
+
+    def do_logout(self, wd):
+        wd.find_element_by_link_text("Logout").click()
+
+    def create_new_contact(self, wd):
+        # open create new contact page
         wd.find_element_by_link_text("add new").click()
+        # enter contact info
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
         wd.find_element_by_name("firstname").send_keys("Tom")
@@ -56,6 +56,7 @@ class test_add_contact(unittest.TestCase):
         wd.find_element_by_name("email").click()
         wd.find_element_by_name("email").clear()
         wd.find_element_by_name("email").send_keys("auto@test.com")
+        # enter Birthday
         if not wd.find_element_by_xpath("//div[@id='content']/form/select[1]//option[3]").is_selected():
             wd.find_element_by_xpath("//div[@id='content']/form/select[1]//option[3]").click()
         if not wd.find_element_by_xpath("//div[@id='content']/form/select[2]//option[3]").is_selected():
@@ -63,6 +64,7 @@ class test_add_contact(unittest.TestCase):
         wd.find_element_by_name("byear").click()
         wd.find_element_by_name("byear").clear()
         wd.find_element_by_name("byear").send_keys("1970")
+        # enter secondary contact info
         wd.find_element_by_name("address2").click()
         wd.find_element_by_name("address2").clear()
         wd.find_element_by_name("address2").send_keys("address line secondary")
@@ -72,10 +74,25 @@ class test_add_contact(unittest.TestCase):
         wd.find_element_by_name("notes").click()
         wd.find_element_by_name("notes").clear()
         wd.find_element_by_name("notes").send_keys("contact record")
+        # click Enter button
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
-        wd.find_element_by_link_text("Logout").click()
-        self.assertTrue(success)
-    
+
+    def do_login(self, wd, username, password):
+        # enter username
+        wd.find_element_by_name("user").click()
+        wd.find_element_by_name("user").clear()
+        wd.find_element_by_name("user").send_keys(username)
+        # enter password
+        wd.find_element_by_id("LoginForm").click()
+        wd.find_element_by_name("pass").click()
+        wd.find_element_by_name("pass").clear()
+        wd.find_element_by_name("pass").send_keys(password)
+        # click Login button
+        wd.find_element_by_xpath("//form[@id='LoginForm']/input[3]").click()
+
+    def open_login_page(self, wd):
+        wd.get("http://localhost:8080/addressbook/")
+
     def tearDown(self):
         self.wd.quit()
 
