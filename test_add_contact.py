@@ -17,22 +17,22 @@ class test_add_contact(unittest.TestCase):
         self.wd.implicitly_wait(60)
     
     def test_test_add_contact(self):
-        wd = self.wd
-        self.open_login_page(wd)
-        self.do_login(wd, username="admin", password="secret")
-        self.create_new_contact(wd, Contact(firstname="Tom", middlename="J", lastname="Tomson", nickname="Tm" ,
-                                            title="Boss", company="Comp", address="address line", homephone="800-900",
-                                            email="auto@test.com", birth_year="1970",
-                                            secondary_address="address line secondary",
-                                            secondary_homephone="801-901", notes="contact record"))
-        self.do_logout(wd)
+        self.do_login(username="admin", password="secret")
+        self.create_new_contact(Contact(firstname="Tom", middlename="J", lastname="Tomson", nickname="Tm" ,
+                                        title="Boss", company="Comp", address="address line", homephone="800-900",
+                                        email="auto@test.com", birth_year="1970",
+                                        secondary_address="address line secondary",
+                                        secondary_homephone="801-901", notes="contact record"))
+        self.do_logout()
 
-    def do_logout(self, wd):
+    def do_logout(self):
+        wd = self.wd
         wd.find_element_by_link_text("Logout").click()
 
-    def create_new_contact(self, wd, contact):
+    def create_new_contact(self, contact):
+        wd = self.wd
         # open create new contact page
-        wd.find_element_by_link_text("add new").click()
+        self.open_create_contact_page()
         # enter contact info
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
@@ -82,7 +82,13 @@ class test_add_contact(unittest.TestCase):
         # click Enter button
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
 
-    def do_login(self, wd, username, password):
+    def open_create_contact_page(self):
+        wd = self.wd
+        wd.find_element_by_link_text("add new").click()
+
+    def do_login(self, username, password):
+        wd = self.wd
+        self.open_login_page()
         # enter username
         wd.find_element_by_name("user").click()
         wd.find_element_by_name("user").clear()
@@ -95,7 +101,8 @@ class test_add_contact(unittest.TestCase):
         # click Login button
         wd.find_element_by_xpath("//form[@id='LoginForm']/input[3]").click()
 
-    def open_login_page(self, wd):
+    def open_login_page(self):
+        wd = self.wd
         wd.get("http://localhost:8080/addressbook/")
 
     def tearDown(self):

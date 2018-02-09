@@ -19,17 +19,17 @@ class test_add_group(unittest.TestCase):
         self.wd.implicitly_wait(60)
 
     def test_test_add_group(self):
-        wd = self.wd
-        self.open_login_page(wd)
-        self.do_login(wd, username="admin", password="secret")
-        self.open_group_page(wd)
-        self.create_new_group(wd, Group(name="groupA", header="group header", footer="group footer"))
-        self.logout(wd)
+        self.do_login(username="admin", password="secret")
+        self.create_new_group(Group(name="groupA", header="group header", footer="group footer"))
+        self.logout()
 
-    def logout(self, wd):
+    def logout(self):
+        wd = self.wd
         wd.find_element_by_link_text("Logout").click()
 
-    def create_new_group(self, wd, group):
+    def create_new_group(self, group):
+        wd = self.wd
+        self.open_group_page()
         # open create group page
         wd.find_element_by_name("new").click()
         # enter group name
@@ -49,10 +49,13 @@ class test_add_group(unittest.TestCase):
         # open group list page
         wd.find_element_by_link_text("group page").click()
 
-    def open_group_page(self, wd):
+    def open_group_page(self):
+        wd = self.wd
         wd.find_element_by_link_text("groups").click()
 
-    def do_login(self, wd, username, password):
+    def do_login(self, username, password):
+        wd = self.wd
+        self.open_login_page()
         # enter username
         wd.find_element_by_name("user").click()
         wd.find_element_by_name("user").clear()
@@ -64,7 +67,8 @@ class test_add_group(unittest.TestCase):
         # click login button
         wd.find_element_by_xpath("//form[@id='LoginForm']/input[3]").click()
 
-    def open_login_page(self, wd):
+    def open_login_page(self):
+        wd = self.wd
         wd.get("http://localhost:8080/addressbook/")
 
     def tearDown(self):
