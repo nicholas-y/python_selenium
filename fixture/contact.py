@@ -21,6 +21,10 @@ class ContactHelper:
         # click on first contact checkbox
         wd.find_element_by_name("selected[]").click()
 
+    def click_edit_button(self):
+        wd = self.app.wd
+        wd.find_element_by_css_selector("img[title=\"Edit\"]").click()
+
     def delete_first(self):
         wd = self.app.wd
         # open home page with contacts list
@@ -41,7 +45,7 @@ class ContactHelper:
         # choose contact
         self.choose_first_contact()
         # click Edit button
-        wd.find_element_by_css_selector("img[title=\"Edit\"]").click()
+        self.click_edit_button()
         # enter contact info
         self.enter_contact_info(contact)
         # click Update button

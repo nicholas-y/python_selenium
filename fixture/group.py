@@ -38,6 +38,10 @@ class GroupHelper:
         wd = self.app.wd
         wd.find_element_by_name("selected[]").click()
 
+    def click_edit_button(self):
+        wd = self.app.wd
+        wd.find_element_by_name("edit").click()
+
     def delete_first(self):
         wd = self.app.wd
         self.open_group_page()
@@ -54,7 +58,7 @@ class GroupHelper:
         # click on first group checkbox
         self.choose_first_group()
         # click Edit Group button
-        wd.find_element_by_name("edit").click()
+        self.click_edit_button()
         # enter new info
         self.enter_group_info(group)
         # click Update button
