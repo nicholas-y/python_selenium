@@ -13,7 +13,7 @@ class GroupHelper:
         # click submit button
         wd.find_element_by_name("submit").click()
         # open group list page
-        wd.find_element_by_link_text("group page").click()
+        self.open_group_page()
 
     def enter_group_info(self, group):
         wd = self.app.wd
@@ -34,21 +34,25 @@ class GroupHelper:
         wd = self.app.wd
         wd.find_element_by_link_text("groups").click()
 
+    def choose_first_group(self):
+        wd = self.app.wd
+        wd.find_element_by_name("selected[]").click()
+
     def delete_first(self):
         wd = self.app.wd
         self.open_group_page()
         # click on first group checkbox
-        wd.find_element_by_name("selected[]").click()
+        self.choose_first_group()
         # click Delete Group button
         wd.find_element_by_name("delete").click()
         # open group list page
-        wd.find_element_by_link_text("group page").click()
+        self.open_group_page()
 
     def edit_first(self, group):
         wd = self.app.wd
         self.open_group_page()
         # click on first group checkbox
-        wd.find_element_by_name("selected[]").click()
+        self.choose_first_group()
         # click Edit Group button
         wd.find_element_by_name("edit").click()
         # enter new info
@@ -56,5 +60,5 @@ class GroupHelper:
         # click Update button
         wd.find_element_by_name("update").click()
         # open group list page
-        wd.find_element_by_link_text("group page").click()
+        self.open_group_page()
 
