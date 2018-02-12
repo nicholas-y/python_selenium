@@ -16,21 +16,30 @@ class ContactHelper:
         # click Enter button
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
 
-    def delete_first(self):
+    def choose_first_contact(self):
         wd = self.app.wd
         # click on first contact checkbox
         wd.find_element_by_name("selected[]").click()
+
+    def delete_first(self):
+        wd = self.app.wd
+        # open home page with contacts list
+        self.app.open_home_page()
+        # choose contact
+        self.choose_first_contact()
         # click Delete button
         wd.find_element_by_css_selector("input[value=\"Delete\"]").click()
         # accept alert
         wd.switch_to_alert().accept()
-        # open contacts list page
-        wd.find_element_by_link_text("home").click()
+        # open home page with contacts list
+        self.app.open_home_page()
 
     def edit_first(self, contact):
         wd = self.app.wd
-        # click on first contact checkbox
-        wd.find_element_by_name("selected[]").click()
+        # open home page with contacts list
+        self.app.open_home_page()
+        # choose contact
+        self.choose_first_contact()
         # click Edit button
         wd.find_element_by_css_selector("img[title=\"Edit\"]").click()
         # enter contact info
@@ -38,7 +47,7 @@ class ContactHelper:
         # click Update button
         wd.find_element_by_name("update").click()
         # open contacts list page
-        wd.find_element_by_link_text("home page").click()
+        self.app.open_home_page()
 
     def enter_contact_info(self, contact):
         wd = self.app.wd
