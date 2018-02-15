@@ -9,26 +9,23 @@ class GroupHelper:
         # open create group page
         wd.find_element_by_name("new").click()
         # enter group info
-        self.enter_group_info(group)
+        self.fill_group_form(group)
         # click submit button
         wd.find_element_by_name("submit").click()
         # open group list page
         self.open_group_page()
 
-    def enter_group_info(self, group):
+    def fill_group_form(self, group):
+        self.fill_group_form_field("group_name", group.name)
+        self.fill_group_form_field("group_header", group.header)
+        self.fill_group_form_field("group_footer", group.footer)
+
+    def fill_group_form_field(self, field_name, text):
         wd = self.app.wd
-        # enter group name
-        wd.find_element_by_name("group_name").click()
-        wd.find_element_by_name("group_name").clear()
-        wd.find_element_by_name("group_name").send_keys(group.name)
-        # enter group header
-        wd.find_element_by_name("group_header").click()
-        wd.find_element_by_name("group_header").clear()
-        wd.find_element_by_name("group_header").send_keys(group.header)
-        # enter group footer
-        wd.find_element_by_name("group_footer").click()
-        wd.find_element_by_name("group_footer").clear()
-        wd.find_element_by_name("group_footer").send_keys(group.footer)
+        if text is not None:
+            wd.find_element_by_name(field_name).click()
+            wd.find_element_by_name(field_name).clear()
+            wd.find_element_by_name(field_name).send_keys(text)
 
     def open_group_page(self):
         wd = self.app.wd
@@ -60,7 +57,7 @@ class GroupHelper:
         # click Edit Group button
         self.click_edit_button()
         # enter new info
-        self.enter_group_info(group)
+        self.fill_group_form(group)
         # click Update button
         wd.find_element_by_name("update").click()
         # open group list page
