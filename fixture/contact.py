@@ -12,7 +12,7 @@ class ContactHelper:
         # open create new contact page
         self.open_create_contact_page()
         # enter contact info
-        self.enter_contact_info(contact)
+        self.fill_contact_form(contact)
         # click Enter button
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
 
@@ -47,57 +47,44 @@ class ContactHelper:
         # click Edit button
         self.click_edit_button()
         # enter contact info
-        self.enter_contact_info(contact)
+        self.fill_contact_form(contact)
         # click Update button
         wd.find_element_by_name("update").click()
         # open contacts list page
         self.app.open_home_page()
 
-    def enter_contact_info(self, contact):
+    def fill_contact_form(self, contact):
         wd = self.app.wd
-        # enter contact info
-        wd.find_element_by_name("firstname").click()
-        wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys(contact.firstname)
-        wd.find_element_by_name("middlename").click()
-        wd.find_element_by_name("middlename").clear()
-        wd.find_element_by_name("middlename").send_keys(contact.middlename)
-        wd.find_element_by_name("lastname").click()
-        wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys(contact.lastname)
-        wd.find_element_by_name("nickname").click()
-        wd.find_element_by_name("nickname").clear()
-        wd.find_element_by_name("nickname").send_keys(contact.nickname)
-        wd.find_element_by_name("title").click()
-        wd.find_element_by_name("title").clear()
-        wd.find_element_by_name("title").send_keys(contact.title)
-        wd.find_element_by_name("company").click()
-        wd.find_element_by_name("company").clear()
-        wd.find_element_by_name("company").send_keys(contact.company)
-        wd.find_element_by_name("address").click()
-        wd.find_element_by_name("address").clear()
-        wd.find_element_by_name("address").send_keys(contact.address)
-        wd.find_element_by_name("home").click()
-        wd.find_element_by_name("home").clear()
-        wd.find_element_by_name("home").send_keys(contact.homephone)
-        wd.find_element_by_name("email").click()
-        wd.find_element_by_name("email").clear()
-        wd.find_element_by_name("email").send_keys(contact.email)
+        self.fill_contact_form_field("firstname", contact.firstname)
+        self.fill_contact_form_field("middlename", contact.middlename)
+        self.fill_contact_form_field("lastname", contact.lastname)
+        self.fill_contact_form_field("nickname", contact.nickname)
+        self.fill_contact_form_field("title", contact.title)
+        self.fill_contact_form_field("company", contact.company)
+        self.fill_contact_form_field("address", contact.address)
+        self.fill_contact_form_field("home", contact.homephone)
+        self.fill_contact_form_field("email", contact.email)
         # enter Birthday
         if not wd.find_element_by_xpath("//div[@id='content']/form/select[1]//option[3]").is_selected():
             wd.find_element_by_xpath("//div[@id='content']/form/select[1]//option[3]").click()
         if not wd.find_element_by_xpath("//div[@id='content']/form/select[2]//option[3]").is_selected():
             wd.find_element_by_xpath("//div[@id='content']/form/select[2]//option[3]").click()
-        wd.find_element_by_name("byear").click()
-        wd.find_element_by_name("byear").clear()
-        wd.find_element_by_name("byear").send_keys(contact.birth_year)
+
+        self.fill_contact_form_field("byear", contact.birth_year)
         # enter secondary contact info
-        wd.find_element_by_name("address2").click()
-        wd.find_element_by_name("address2").clear()
-        wd.find_element_by_name("address2").send_keys(contact.secondary_address)
-        wd.find_element_by_name("phone2").click()
-        wd.find_element_by_name("phone2").clear()
-        wd.find_element_by_name("phone2").send_keys(contact.secondary_homephone)
-        wd.find_element_by_name("notes").click()
-        wd.find_element_by_name("notes").clear()
-        wd.find_element_by_name("notes").send_keys(contact.notes)
+        self.fill_contact_form_field("address2", contact.secondary_address)
+        self.fill_contact_form_field("phone2", contact.secondary_homephone)
+        self.fill_contact_form_field("notes", contact.notes)
+
+    def fill_contact_form_field(self, field_name, text):
+        wd = self.app.wd
+        if text is not None:
+            # enter contact info
+            wd.find_element_by_name(field_name).click()
+            wd.find_element_by_name(field_name).clear()
+            wd.find_element_by_name(field_name).send_keys(text)
+
+    def count(self):
+        wd = self.app.wd
+        self.app.open_home_page()
+        return len(wd.find_elements_by_name("selected[]"))
