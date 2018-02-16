@@ -23,11 +23,13 @@ class Application:
 
     def open_login_page(self):
         wd = self.wd
-        wd.get("http://localhost:8080/addressbook/")
+        if not (wd.current_url.endswith("/addressbook/") and len(wd.find_elements_by_css_selector("input[type=\"submit\"]")) > 0):
+            wd.get("http://localhost:8080/addressbook/")
 
     def open_home_page(self):
         wd = self.wd
-        wd.find_element_by_link_text("home").click()
+        if not (wd.current_url.endswith("/addressbook/") and len(wd.find_elements_by_name("searchstring")) > 0):
+            wd.find_element_by_link_text("home").click()
 
     def destroy(self):
         self.wd.quit()
