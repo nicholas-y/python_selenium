@@ -39,29 +39,38 @@ class GroupHelper:
             wd.find_element_by_link_text("groups").click()
 
     def choose_first_group(self):
+        self.choose_group_by_index(0)
+
+    def choose_group_by_index(self, index):
         wd = self.app.wd
-        wd.find_element_by_name("selected[]").click()
+        wd.find_elements_by_name("selected[]")[index].click()
 
     def click_edit_button(self):
         wd = self.app.wd
         wd.find_element_by_name("edit").click()
 
     def delete_first(self):
+        self.delete_group_by_index(0)
+
+    def delete_group_by_index(self, index):
         wd = self.app.wd
         self.open_group_page()
         # click on first group checkbox
-        self.choose_first_group()
+        self.choose_group_by_index(index)
         # click Delete Group button
         wd.find_element_by_name("delete").click()
         # open group list page
         self.open_group_page()
         self.group_cache = None
 
-    def edit_first(self, group):
+    def edit_first_group(self, group):
+        self.edit_group_by_index(group, 0)
+
+    def edit_group_by_index(self, group, index):
         wd = self.app.wd
         self.open_group_page()
         # click on first group checkbox
-        self.choose_first_group()
+        self.choose_group_by_index(index)
         # click Edit Group button
         self.click_edit_button()
         # enter new info
