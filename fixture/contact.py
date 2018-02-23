@@ -23,20 +23,26 @@ class ContactHelper:
         self.contact_cache = None
 
     def choose_first_contact(self):
+        self.choose_contact_by_index(0)
+
+    def choose_contact_by_index(self, index):
         wd = self.app.wd
         # click on first contact checkbox
-        wd.find_element_by_name("selected[]").click()
+        wd.find_elements_by_name("selected[]")[index].click()
 
     def click_edit_button(self):
         wd = self.app.wd
         wd.find_element_by_css_selector("img[title=\"Edit\"]").click()
 
     def delete_first(self):
+        self.delete_contact_by_index(0)
+
+    def delete_contact_by_index(self, index):
         wd = self.app.wd
         # open home page with contacts list
         self.app.open_home_page()
         # choose contact
-        self.choose_first_contact()
+        self.choose_contact_by_index(index)
         # click Delete button
         wd.find_element_by_css_selector("input[value=\"Delete\"]").click()
         # accept alert
@@ -46,11 +52,14 @@ class ContactHelper:
         self.contact_cache = None
 
     def edit_first(self, contact):
+        self.edit_contact_by_index(contact, 0)
+
+    def edit_contact_by_index(self, contact, index):
         wd = self.app.wd
         # open home page with contacts list
         self.app.open_home_page()
         # choose contact
-        self.choose_first_contact()
+        self.choose_contact_by_index(index)
         # click Edit button
         self.click_edit_button()
         # enter contact info
