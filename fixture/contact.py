@@ -31,8 +31,11 @@ class ContactHelper:
         wd.find_elements_by_name("selected[]")[index].click()
 
     def click_edit_button(self):
+        self.click_edit_button_by_index(0)
+
+    def click_edit_button_by_index(self, index):
         wd = self.app.wd
-        wd.find_element_by_css_selector("img[title=\"Edit\"]").click()
+        wd.find_elements_by_css_selector("#maintable img[title='Edit']")[index].click()
 
     def delete_first(self):
         self.delete_contact_by_index(0)
@@ -59,9 +62,7 @@ class ContactHelper:
         # open home page with contacts list
         self.app.open_home_page()
         # choose contact
-        self.choose_contact_by_index(index)
-        # click Edit button
-        self.click_edit_button()
+        self.click_edit_button_by_index(index)
         # enter contact info
         self.fill_contact_form(contact)
         # click Update button
