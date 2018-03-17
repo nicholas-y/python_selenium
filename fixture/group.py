@@ -45,6 +45,10 @@ class GroupHelper:
         wd = self.app.wd
         wd.find_elements_by_name("selected[]")[index].click()
 
+    def choose_group_by_id(self, id):
+        wd = self.app.wd
+        wd.find_element_by_css_selector("input[value='%s'" % id).click()
+
     def click_edit_button(self):
         wd = self.app.wd
         wd.find_element_by_name("edit").click()
@@ -63,6 +67,17 @@ class GroupHelper:
         self.open_group_page()
         self.group_cache = None
 
+    def delete_group_by_id(self, id):
+        wd = self.app.wd
+        self.open_group_page()
+        # click on first group checkbox
+        self.choose_group_by_id(id)
+        # click Delete Group button
+        wd.find_element_by_name("delete").click()
+        # open group list page
+        self.open_group_page()
+        self.group_cache = None
+
     def edit_first_group(self, group):
         self.edit_group_by_index(group, 0)
 
@@ -71,6 +86,21 @@ class GroupHelper:
         self.open_group_page()
         # click on first group checkbox
         self.choose_group_by_index(index)
+        # click Edit Group button
+        self.click_edit_button()
+        # enter new info
+        self.fill_group_form(group)
+        # click Update button
+        wd.find_element_by_name("update").click()
+        # open group list page
+        self.open_group_page()
+        self.group_cache = None
+
+    def edit_group_by_id(self, group):
+        wd = self.app.wd
+        self.open_group_page()
+        # click on first group checkbox
+        self.choose_group_by_id(group.id)
         # click Edit Group button
         self.click_edit_button()
         # enter new info

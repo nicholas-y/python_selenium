@@ -1,7 +1,7 @@
 {
   "test_add_contact.py": true,
-  "test_add_contact.py::test_add_contact[None:lastname :firstnameg 5q u0Z3:address qcFKhokfGMv]": true,
   "test_add_group.py::test_add_group[None:name  E I x:headerCy :footerbEyyn244dnKfXwgqJ ]": true,
   "test_add_group.py::test_add_group[None:name  I:header:footerPeDPe]": true,
-  "test_add_group.py::test_add_group[None:nameAbaC :headerMiL UCrDZm6mG8H 4l:footerCHjaNCIWT7VbfxamQtp]": true
+  "test_add_group.py::test_add_group[None:nameAbaC :headerMiL UCrDZm6mG8H 4l:footerCHjaNCIWT7VbfxamQtp]": true,
+  "test_db_matches_ui.py::test_group_list": true
 }
