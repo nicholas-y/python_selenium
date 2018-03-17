@@ -30,12 +30,21 @@ class ContactHelper:
         # click on first contact checkbox
         wd.find_elements_by_name("selected[]")[index].click()
 
+    def choose_contact_by_id(self, id):
+        wd = self.app.wd
+        # click on first contact checkbox
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()
+
     def click_edit_button(self):
         self.click_edit_button_by_index(0)
 
     def click_edit_button_by_index(self, index):
         wd = self.app.wd
         wd.find_elements_by_css_selector("#maintable img[title='Edit']")[index].click()
+
+    def click_edit_button_by_id(self, id):
+        wd = self.app.wd
+        wd.find_element_by_css_selector("a[href='edit.php?id=%s']" % id).click()
 
     def delete_first(self):
         self.delete_contact_by_index(0)
@@ -54,6 +63,20 @@ class ContactHelper:
         self.app.open_home_page()
         self.contact_cache = None
 
+    def delete_contact_by_id(self, id):
+        wd = self.app.wd
+        # open home page with contacts list
+        self.app.open_home_page()
+        # choose contact
+        self.choose_contact_by_id(id)
+        # click Delete button
+        wd.find_element_by_css_selector("input[value=\"Delete\"]").click()
+        # accept alert
+        wd.switch_to_alert().accept()
+        # open home page with contacts list
+        self.app.open_home_page()
+        self.contact_cache = None
+
     def edit_first(self, contact):
         self.edit_contact_by_index(contact, 0)
 
@@ -63,6 +86,20 @@ class ContactHelper:
         self.app.open_home_page()
         # choose contact
         self.click_edit_button_by_index(index)
+        # enter contact info
+        self.fill_contact_form(contact)
+        # click Update button
+        wd.find_element_by_name("update").click()
+        # open contacts list page
+        self.app.open_home_page()
+        self.contact_cache = None
+
+    def edit_contact_by_id(self, contact):
+        wd = self.app.wd
+        # open home page with contacts list
+        self.app.open_home_page()
+        # choose contact
+        self.click_edit_button_by_id(contact.id)
         # enter contact info
         self.fill_contact_form(contact)
         # click Update button
