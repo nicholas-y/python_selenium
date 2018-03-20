@@ -181,3 +181,12 @@ class ContactHelper:
         return Contact(id=id, firstname=firstname, lastname=lastname, address=address, email=email, email2=email2,
                        email3=email3, homephone=homephone, workphone=workphone, mobilephone=mobilephone,
                        secondary_homephone=secondaryphone)
+
+    def add_contact_to_group(self, contact_id, group_id):
+        wd = self.app.wd
+        self.app.open_home_page()
+        wd.find_element_by_id(contact_id).click()
+        wd.find_element_by_css_selector("select[name='to_group'] option[value='%s']" % group_id).click()
+        wd.find_element_by_name("add").click()
+        wd.find_element_by_css_selector("a[href='./?group=%s']" % group_id).click()
+
