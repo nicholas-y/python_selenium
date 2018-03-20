@@ -190,3 +190,13 @@ class ContactHelper:
         wd.find_element_by_name("add").click()
         wd.find_element_by_css_selector("a[href='./?group=%s']" % group_id).click()
 
+    def del_contact_from_group(self, contact_id, group_id):
+        wd = self.app.wd
+        self.app.open_home_page()
+        wd.find_element_by_css_selector("select[name='group'] option[value='%s']" % group_id).click()
+        wd.find_element_by_id(contact_id).click()
+        wd.find_element_by_name("remove").click()
+        wd.find_element_by_css_selector("a[href='./?group=%s']" % group_id).click()
+
+
+
