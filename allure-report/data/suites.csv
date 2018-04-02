@@ -1,0 +1,5 @@
+"Status","Name","Duration in ms","Description"
+"passed","test.test_add_group.test_add_group[None:::]","15836",""
+"passed","test.test_add_group.test_add_group[None:name9K:header N dnrrnIcfauIe3:footer gUcHkz9dukdqsoEQOq]","1808",""
+"passed","test.test_add_group.test_add_group[None:name95b:headercOyOfqttQZI39 :footervn o5US]","1455",""
+"passed","test.test_add_group.test_add_group[None:namezLlpC:header8I:footerUjALouiq2euQwUHEzAB]","1549",""
