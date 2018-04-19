@@ -1,2 +1,3 @@
 # python_selenium
-Repository for selenium python tasks
+
+Repository for selenium, python, pytest, robot framework samples.
